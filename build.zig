@@ -29,8 +29,8 @@ pub fn build(b: *std.Build) void {
         lib.link_data_sections = true;
     }
 
-    lib.linkLibC();
-    lib.addConfigHeader(b.addConfigHeader(
+    lib.root_module.link_libc = true;
+    lib.root_module.addConfigHeader(b.addConfigHeader(
         .{ .style = .{ .cmake = .{
             .dependency = .{ .dependency = upstream, .sub_path = "cmake/config.h.in" },
         } } },
@@ -41,8 +41,8 @@ pub fn build(b: *std.Build) void {
             .YAML_VERSION_STRING = "0.2.5",
         },
     ));
-    lib.addIncludePath(.{ .dependency = .{ .dependency = upstream, .sub_path = "include" } });
-    lib.addCSourceFiles(.{
+    lib.root_module.addIncludePath(.{ .dependency = .{ .dependency = upstream, .sub_path = "include" } });
+    lib.root_module.addCSourceFiles(.{
         .root = upstream.path(""),
         .files = &.{
             "src/api.c",
