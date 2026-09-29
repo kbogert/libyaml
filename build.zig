@@ -24,7 +24,7 @@ pub fn build(b: *std.Build) void {
         .linkage = linkage,
     });
 
-    if (optimize == .ReleaseSmall and linkage == .static) {
+    if (optimize == .small and linkage == .static) {
         lib.link_function_sections = true;
         lib.link_data_sections = true;
     }
